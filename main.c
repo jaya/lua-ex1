@@ -38,6 +38,7 @@ static int l_adder_sum(lua_State *L)
 int main(int argc, char *argv[])
 {
 	lua_State *L = lua_open();
+	struct int_stack* s;
 
 	luaL_openlibs(L);
 
@@ -56,7 +57,13 @@ int main(int argc, char *argv[])
 
 	luaL_dofile(L, "script.lua");
 
-	//lua_close(L);	
+	lua_close(L);	
+	while (values)
+	{
+		s = values->next;
+		free(values);
+		values = s;
+	}
 
 	return 0;
 }
